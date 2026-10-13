@@ -8,7 +8,7 @@
 
 여러 사람이 각자 블로그를 꾸리고, 방문자는 한곳에서 둘러보는 멀티 블로그 서비스
 
-[![Release](https://img.shields.io/badge/release-v0.4.0-2c6a4d.svg)](https://github.com/home-blog/blog/releases/tag/v0.4.0)
+[![Release](https://img.shields.io/badge/release-v0.5.0-2c6a4d.svg)](https://github.com/home-blog/blog/releases/tag/v0.5.0)
 [![Live](https://img.shields.io/badge/live-geulgyeol.java21.net-6f9c7e.svg)](http://geulgyeol.java21.net)
 [![API](https://img.shields.io/badge/API-v1-1d2721.svg)](https://github.com/home-blog/docs/blob/main/docs/4-가이드/06-API-버전과-릴리스.md)
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.1-6db33f.svg)](https://spring.io/projects/spring-boot)
@@ -55,7 +55,7 @@
 3. 머리글의 **글쓰기**에서 왼쪽에 마크다운으로 쓰면 오른쪽 원고지 종이에 바로 보입니다. 주제를 고르고 저장하면 첫 화면에도 올라갑니다.
 4. 내 메뉴 → **블로그 관리**에서 조회수·방문자 그래프와 새 댓글을 봅니다.
 
-> 다음 릴리스 v0.5.0에서 GitHub·Google·카카오·네이버 **소셜 로그인**이 더해집니다.
+> v0.5.0(2026-10-13)부터 GitHub·카카오·네이버 계정으로 **소셜 로그인**을 할 수 있습니다. Google은 HTTPS가 붙은 뒤에 엽니다.
 
 ## 주요 기능
 
@@ -278,7 +278,13 @@ cd frontend && npm ci && npm run dev       # 화면 http://localhost:5173
 ## 개발 방식
 
 - **명세부터** — 기능마다 [docs](https://github.com/home-blog/docs)의 `specs/<번호>-<기능>/`에 무엇을(spec) → 어떻게(plan, API 계약) → 작업 목록(tasks)을 쓰고, 정하지 않은 것은 선택지와 추천안을 적어 고른 뒤에 만듭니다. 지금까지 001~010.
-- **브랜치와 PR** — `main`에 직접 올리지 않습니다. `feat/…`, `fix/…`, `chore/…` 브랜치에서 PR을 열고, CI·CodeRabbit·SonarQube를 통과하면 합칩니다. 커밋 메시지에는 작업 ID(T001 등)를 적습니다.
+- **Git Flow** — `main`은 배포본(릴리스마다 태그), `develop`은 다음 릴리스를 모으는 기본 브랜치입니다. 기능은 `feature/*` → `develop`, 릴리스는 `release/<번호>` → `main`(합치면 배포) → `develop`, 급한 수정은 `hotfix/<번호>` → `main` → `develop`. 모두 PR로 합치고, CI·CodeRabbit·SonarQube를 통과해야 합니다. 커밋 메시지에는 작업 ID(T001 등)를 적습니다.
+
+  ```text
+  feature/* ──PR──▶ develop ──release/0.5.0──PR──▶ main ──▶ 배포 → 태그 v0.5.0
+                       ▲                                │
+                       └────────── main을 다시 합침 ◀────┘
+  ```
 - **릴리스** — 로컬에서 쓸 만한 묶음이 되면 버전을 올려 배포합니다. 기능이면 가운데 숫자(0.5.0), 버그 수정만이면 끝 숫자(0.4.1). 변경은 PR마다 CHANGELOG의 `준비 중` 절에 쌓입니다.
 - **API 버전은 릴리스와 따로** — 칸을 더하는 변경은 v1 그대로, 칸을 빼거나 뜻을 바꿀 때만 `/api/v2`.
 
@@ -286,7 +292,7 @@ cd frontend && npm ci && npm run dev       # 화면 http://localhost:5173
 
 | 버전 | 날짜 | 주요 내용 | 기록 |
 | --- | --- | --- | --- |
-| v0.5.0 | 준비 중 | GitHub·Google·카카오·네이버 소셜 로그인, 마이페이지 연결된 계정, 비밀번호 만들기 | [CHANGELOG](https://github.com/home-blog/blog/blob/main/CHANGELOG.md) |
+| v0.5.0 | 2026-10-13 | 소셜 로그인(GitHub·카카오·네이버, Google은 HTTPS 뒤), 마이페이지 연결된 계정, 비밀번호 만들기, Git Flow 첫 릴리스 | [보기](https://github.com/home-blog/blog/releases/tag/v0.5.0) |
 | v0.4.0 | 2026-10-12 | 글 카드 썸네일(사진·원고지), 첫 화면 큰 카드, 넓은 화면 배치, 글결 마크, API 주소 버전 `/api/v1`, 자동 API 문서, 릴리스 자동 기록 | [보기](https://github.com/home-blog/blog/releases/tag/v0.4.0) |
 | v0.3.0 | 2026-10-12 | 다크 모드, 글 목차, 원고지 매수·읽는 시간, 원고지 카드 디자인, 나란히 미리보기, 링크 미리보기 카드, RSS, 사이트 지도 | [CHANGELOG](https://github.com/home-blog/blog/blob/main/CHANGELOG.md) |
 | v0.1.0 | 2026-10-12 | 첫 배포: 가입·로그인·계정, 블로그와 글, 탐색·검색, 댓글·좋아요·신고·태그·이미지, 블로그 관리·통계, 첫 화면 글 모음 | [CHANGELOG](https://github.com/home-blog/blog/blob/main/CHANGELOG.md) |
